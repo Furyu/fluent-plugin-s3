@@ -19,6 +19,7 @@ class S3Output < Fluent::TimeSlicedOutput
   config_param :aws_sec_key, :string
   config_param :s3_bucket, :string
   config_param :s3_endpoint, :string, :default => nil
+  config_param :format, :string, :default => nil
 
   def configure(conf)
     super
@@ -38,8 +39,16 @@ class S3Output < Fluent::TimeSlicedOutput
   end
 
   def format(tag, time, record)
-    time_str = @timef.format(time)
-    "#{time_str}\t#{tag}\t#{record.to_json}\n"
+    if @format.nil?
+      time_str = @timef.format(time)
+      "#{time_str}\t#{tag}\t#{record.to_json}\n"
+    else
+      formatted = @format.gsub(/\{[^\}\s]+\}/) { |matched|
+        key = matched.gsub(/[\{\}]/, "")
+        record[key]
+      }
+      formatted + "\n"
+    end
   end
 
   def write(chunk)

@@ -13,6 +13,11 @@ Simply use RubyGems:
 
     gem install fluent-plugin-s3
 
+If you want to install your own build of fluent-plugin-s3 locally,
+
+    gem build fluent-plugin-s3.gemspec
+    gem install fluent-plugin-s3-0.2.3.gem
+
 == Configuration
 
     <match pattern>
