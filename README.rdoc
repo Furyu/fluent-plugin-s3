@@ -55,6 +55,7 @@ If you want to install your own build of fluent-plugin-s3 locally,
 
 The actual path on S3 will be: "{path}{time_slice_format}_{sequential_number}.gz"
 
+[format] The row format. Use this to extract, and then format values from logged records (serialized in JSON) to simple rows of plain-text. For example, the configuration `format {key1} {key2}` formats the record `{"key1":"fluent","key2":"s3"}` to `"fluent s3"`.
 
 == Copyright
 
